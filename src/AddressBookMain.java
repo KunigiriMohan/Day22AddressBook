@@ -29,7 +29,9 @@ class AddressBookMain {
         System.out.println("Press 4 for viewing the contacts present");
         System.out.println("Press 5 to view contact details by city");
         System.out.println("Press 6 to view contact details by State");
-        System.out.println("Press 7 to Quit");
+        System.out.println("Press 7 to view contact count by State");
+        System.out.println("Press 8 to view contact count by City");
+        System.out.println("Press 9 to Quit");
     }
 
     /*
@@ -97,9 +99,12 @@ class AddressBookMain {
             System.out.println("No Contacts found on city Name");
         }
     }
+    /*
+     * personbyState() method for to view person by state
+     * */
     public static void personbyState() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter Name of the City.");
+        System.out.println("Enter Name of the State.");
         String nameState = scanner.next();
         boolean value = false;
         if (value = stateName.entrySet().stream().anyMatch(name -> name.getKey().equals(stateName)))
@@ -110,6 +115,24 @@ class AddressBookMain {
         {
             System.out.println("No Contacts found on city Name");
         }
+    }
+    /*
+    * countStatePerson() method to count person present particular state and return value
+    * */
+    public static long countStatePerson(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Name of the State.");
+        String nameState = scanner.next();
+        return stateName.entrySet().stream().filter(name -> name.getKey().equals(stateName)).count();
+    }
+    /*
+     * countCityPerson() method to count person present particular city and return value
+     * */
+    public static long countcityPerson(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Name of the City.");
+        String nameCity = scanner.next();
+        return cityName.entrySet().stream().filter(name -> name.getKey().equals(nameCity)).count();
     }
 
     /*
@@ -167,6 +190,15 @@ class AddressBookMain {
             {
                 personbyState();
             }
+            else if(choice ==7)
+            {
+                System.out.println("No of times person present in State : "+countStatePerson());
+            }
+            else if (choice ==8)
+            {
+                System.out.println("No of times person present in City : "+countcityPerson());
+            }
+
             menu();
             choice = inp.nextInt();
         }
