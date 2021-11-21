@@ -2,14 +2,19 @@ import java.util.*;
 
 class AddressBookMain {
 
-    private Map<String,Contact> person = new LinkedHashMap<>();             //Creating hashMap of the AddressBook
+    private Map<String,Contact> person = new LinkedHashMap<>();     //Creating hashMap of the AddressBook
+
+    private static Map<String,Contact>cityName=new LinkedHashMap<>();
+    private static Map<String,Contact>stateName=new LinkedHashMap<>();
+
+
     /*
      * addContact() to add new created contacts to address book
      * */
     public void addContact(String name, Contact c) {
         person.put(name,c);
     }
-    public void printCompanyDetails() {
+    public void printContactDetails() {
         person.entrySet().stream().forEach(System.out::println);
     }
 
@@ -22,7 +27,9 @@ class AddressBookMain {
         System.out.println("Press 2 for Editing Existing contact");
         System.out.println("Press 3 for Deleting Existing Contact");
         System.out.println("Press 4 for viewing the contacts present");
-        System.out.println("Press 5 to Quit.");
+        System.out.println("Press 5 to view contact details by city");
+        System.out.println("Press 6 to view contact details by State");
+        System.out.println("Press 7 to Quit");
     }
 
     /*
@@ -74,6 +81,38 @@ class AddressBookMain {
     }
 
     /*
+    * personbyCity() method for to view person by city
+    * */
+    public static void personbyCity() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Name of the City.");
+        String nameCity = scanner.next();
+        boolean value = false;
+        if (value = cityName.entrySet().stream().anyMatch(name -> name.getKey().equals(nameCity)))
+        {
+            cityName.entrySet().stream().filter(name -> name.getKey().equals(nameCity)).forEach(System.out::println);
+        }
+        else
+        {
+            System.out.println("No Contacts found on city Name");
+        }
+    }
+    public static void personbyState() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter Name of the City.");
+        String nameState = scanner.next();
+        boolean value = false;
+        if (value = stateName.entrySet().stream().anyMatch(name -> name.getKey().equals(stateName)))
+        {
+            stateName.entrySet().stream().filter(name -> name.getKey().equals(stateName)).forEach(System.out::println);
+        }
+        else
+        {
+            System.out.println("No Contacts found on city Name");
+        }
+    }
+
+    /*
      * Mian function of class
      * */
     public static void main(String[] args) {
@@ -81,8 +120,8 @@ class AddressBookMain {
         AddressBookMain obj = new AddressBookMain();
         menu();
         int choice = inp.nextInt();
-        while (choice != 5) {
-
+        while (choice != 7)
+        {
             if (choice == 1) {
                 System.out.println("Enter First Name:");
                 String fName = inp.next();
@@ -104,6 +143,8 @@ class AddressBookMain {
                     int pinCode = inp.nextInt();
 
                     obj.addContact(fName, new Contact(fName, lName, number, city, state, pinCode));
+                    obj.cityName.put(city,new Contact(fName, lName, number, city, state, pinCode));
+                    obj.stateName.put(city,new Contact(fName, lName, number, city, state, pinCode));
                 }
 
             } else if (choice == 2) {
@@ -116,7 +157,15 @@ class AddressBookMain {
                 String fName = inp.next();
                 obj.deleteContact(fName);
             } else if (choice == 4) {
-                obj.printCompanyDetails();
+                obj.printContactDetails();
+            }
+            else if (choice ==5)
+            {
+                personbyCity();
+            }
+            else if (choice ==6)
+            {
+                personbyState();
             }
             menu();
             choice = inp.nextInt();
